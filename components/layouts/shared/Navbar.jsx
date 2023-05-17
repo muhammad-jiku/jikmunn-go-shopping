@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import logoImg from '../../../assets/images/logo.png';
 import profileImg from '../../../assets/images/default.png';
+import Search from '../filters/Search';
 
 const Navbar = () => {
   return (
@@ -13,9 +14,10 @@ const Navbar = () => {
         <div className="flex flex-wrap items-center">
           <div className="flex-shrink-0 mr-5">
             <a href="/">
-              <Image src={logoImg.src} height="40" width="120" alt="BuyItNow" />
+              <Image src={logoImg.src} height="40" width="120" alt="Shop Now" />
             </a>
           </div>
+          <Search />
 
           <div className="flex items-center space-x-2 ml-auto">
             <Link
@@ -28,7 +30,7 @@ const Navbar = () => {
               </span>
             </Link>
             <Link
-              href="/login"
+              href="/signin"
               className="px-3 py-2 inline-block text-center text-gray-700 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 hover:border-gray-300"
             >
               <i className="text-gray-400 w-5 fa fa-user"></i>
