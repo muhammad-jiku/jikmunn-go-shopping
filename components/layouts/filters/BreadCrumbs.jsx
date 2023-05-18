@@ -2,10 +2,11 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { BiRightArrow } from 'react-icons/bi';
 
 const BreadCrumbs = ({ breadCrumbs }) => {
   return (
-    <section className="py-5 sm:py-7 bg-blue-100">
+    <section className="py-5 sm:py-7 bg-blue-100"> 
       <div className="container max-w-screen-xl mx-auto px-4">
         <ol className="inline-flex flex-wrap text-gray-600 space-x-1 md:space-x-3 items-center">
           {breadCrumbs?.map((breadCrumb, index) => (
@@ -17,7 +18,7 @@ const BreadCrumbs = ({ breadCrumbs }) => {
                 {breadCrumb.name}
               </Link>
               {breadCrumbs?.length - 1 !== index && (
-                <i className="ml-3 text-gray-400 fa fa-chevron-right"></i>
+                <BiRightArrow className="ml-2" />
               )}
             </li>
           ))}
