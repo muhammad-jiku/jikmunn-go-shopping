@@ -9,6 +9,11 @@ const getProductDetails = async (id) => {
   return data?.product;
 };
 
+export async function generateMetadata({ params, searchParams }) {
+  const product = await getProductDetails(params.id);
+  return { title: product.name };
+}
+
 const ProductDetailsPage = async ({ params }) => {
   const product = await getProductDetails(params.id);
 
