@@ -1,5 +1,6 @@
 import '../styles/globals.css';
 import { Navbar } from '@/components/layouts';
+import { GlobalProvider } from './provider/GlobalProvider';
 
 export const metadata = {
   title: 'Ecommerce Demo',
@@ -10,8 +11,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="flex flex-col min-h-screen overflow-x-hidden">
-        <Navbar />
-        {children}
+        <GlobalProvider>
+          <Navbar />
+          {children}
+        </GlobalProvider>
       </body>
     </html>
   );
