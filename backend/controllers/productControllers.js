@@ -1,8 +1,25 @@
 import Product from '../models/product';
+import ApiFeatures from '../utils/ApiFeatures';
 
 export const getProducts = async (req, res, next) => {
-  const products = await Product.find();
+  const resPerPage = 3;
+  const productsCount = await Product.countDocuments();
+
+  const apiFilters = new ApiFeatures(Product.find(), req.query)
+    .search()
+    .filter();
+
+  let products = await apiFilters.query;
+  const filteredProductsCount = products.length;
+
+  apiFilters.pagination(resPerPage);
+
+  products = await apiFilters.query.clone();
+
   res.status(200).json({
+    productsCount,
+    resPerPage,
+    filteredProductsCount,
     products,
   });
 };
