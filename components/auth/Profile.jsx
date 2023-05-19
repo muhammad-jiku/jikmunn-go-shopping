@@ -3,6 +3,7 @@
 import React, { useContext } from 'react';
 import Link from 'next/link';
 import AuthContext from '@/context/AuthContext';
+import profileImg from '../../assets/images/default.png';
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
@@ -13,7 +14,7 @@ const Profile = () => {
         <div className="relative">
           <img
             className="w-16 h-16 rounded-full mr-4"
-            src={user?.avatar ? user?.avatar?.url : '/images/default.png'}
+            src={user?.avatar ? user?.avatar?.url : profileImg.src}
             alt={user?.name}
           />
         </div>
@@ -21,7 +22,7 @@ const Profile = () => {
           <h5 className="font-semibold text-lg">{user?.name}</h5>
           <p>
             <b>Email:</b> {user?.email} | <b>Joined On:</b>
-            {user?.createdAt}
+            {user?.createdAt.substring(0, 10)}
           </p>
         </figcaption>
       </figure>
