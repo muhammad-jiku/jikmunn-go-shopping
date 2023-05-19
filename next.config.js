@@ -7,6 +7,7 @@ const nextConfig = {
   env: {
     BASE_URL: `${process.env.BASE_URL}`,
     DB_URI: `${process.env.DB_URI}`,
+    NEXTAUTH_SECRET: `${process.env.NEXTAUTH_SECRET}`,
   },
   images: {
     unoptimized: true,
