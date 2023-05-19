@@ -9,6 +9,7 @@ import Search from '../filters/Search';
 import CartContext from '@/context/CartContext';
 import AuthContext from '@/context/AuthContext';
 import { useSession } from 'next-auth/react';
+import { BiCart, BiUser, BiMenu } from 'react-icons/bi';
 
 const Navbar = () => {
   const { user, setUser } = useContext(AuthContext);
@@ -42,17 +43,17 @@ const Navbar = () => {
               href="/cart"
               className="px-3 py-2 inline-block text-center text-gray-700 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 hover:border-gray-300"
             >
-              <i className="text-gray-400 w-5 fa fa-shopping-cart"></i>
+              <BiCart className='inline ml-1 lg:hidden text-base' />
               <span className="hidden lg:inline ml-1">
-                Cart (<b>{cartItems?.length || 0}</b>)
-              </span>
+                Cart  
+              </span>(<b className='text-base lg:text-lg'>{cartItems?.length || 0}</b>)
             </Link>
             {!user ? (
               <Link
                 href="/signin"
                 className="px-3 py-2 inline-block text-center text-gray-700 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 hover:border-gray-300"
               >
-                <i className="text-gray-400 w-5 fa fa-user"></i>
+                <BiUser className='inline ml-1 lg:hidden text-base' />
                 <span className="hidden lg:inline ml-1">Sign in</span>
               </Link>
             ) : (
@@ -75,13 +76,13 @@ const Navbar = () => {
             )}
           </div>
 
-          <div className="lg:hidden ml-2">
+          <div className="lg:hidden ml-1">
             <button
               type="button"
               className="bg-white p-3 inline-flex items-center rounded-md text-black hover:bg-gray-200 hover:text-gray-800 border border-transparent"
             >
               <span className="sr-only">Open menu</span>
-              <i className="fa fa-bars fa-lg"></i>
+              <BiMenu className='inline ml-1 text-base' />
             </button>
           </div>
         </div>
