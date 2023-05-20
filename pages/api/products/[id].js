@@ -1,5 +1,6 @@
 import dbConnect from '@/backend/config/dbConnect';
 import { getProduct } from '@/backend/controllers/productControllers';
+import { CheckError } from '@/backend/middlewares/errors';
 import { createRouter } from 'next-connect';
 
 const router = createRouter();
@@ -16,9 +17,5 @@ router.all((req, res) => {
 });
 
 export default router.handler({
-  onError(err, req, res) {
-    res.status(500).json({
-      error: err.message,
-    });
-  },
+  onError: CheckError,
 });

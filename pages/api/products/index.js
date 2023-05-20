@@ -4,6 +4,7 @@ import {
   getProducts,
   newProduct,
 } from '@/backend/controllers/productControllers';
+import { CheckError } from '@/backend/middlewares/errors';
 
 const router = createRouter();
 
@@ -21,9 +22,5 @@ router.all((req, res) => {
 });
 
 export default router.handler({
-  onError(err, req, res) {
-    res.status(500).json({
-      error: err.message,
-    });
-  },
+  onError: CheckError,
 });
