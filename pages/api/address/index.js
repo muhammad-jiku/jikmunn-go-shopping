@@ -1,10 +1,14 @@
 import { createRouter } from 'next-connect';
 import dbConnect from '@/backend/config/dbConnect';
-import { newAddress } from '@/backend/controllers/addressControllers';
+import {
+  getAddresses,
+  newAddress,
+} from '@/backend/controllers/addressControllers';
 
 const router = createRouter();
 dbConnect();
 
+router.get(getAddresses);
 router.post(newAddress);
 
 // this will run if none of the above matches
