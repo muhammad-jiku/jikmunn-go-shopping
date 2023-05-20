@@ -7,3 +7,11 @@ export const newAddress = async (req, res) => {
     address,
   });
 };
+
+export const getAddresses = async (req, res) => {
+  const addresses = await Address.find();
+
+  res.status(200).json({
+    addresses,
+  });
+};
