@@ -4,12 +4,14 @@ import {
   getAddresses,
   newAddress,
 } from '@/backend/controllers/addressControllers';
+import { CheckError } from '@/backend/middlewares/errors';
+import { isAuthenticatedUser } from '@/backend/middlewares/auth';
 
 const router = createRouter();
 dbConnect();
 
-router.get(getAddresses);
-router.post(newAddress);
+router.use(isAuthenticatedUser).get(getAddresses);
+router.use(isAuthenticatedUser).post(newAddress);
 
 // this will run if none of the above matches
 router.all((req, res) => {
@@ -19,9 +21,5 @@ router.all((req, res) => {
 });
 
 export default router.handler({
-  onError(err, req, res) {
-    res.status(500).json({
-      error: err.message,
-    });
-  },
+  onError: CheckError,
 });
