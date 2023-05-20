@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Profile } from '@/components';
+import { cookies } from 'next/headers';
 
 export const metadata = {
   title: 'My Profile - Ecommerce Demo',
@@ -8,7 +9,15 @@ export const metadata = {
 };
 
 const getAddresses = async () => {
-  const { data } = await axios.get(`${process.env.BASE_URL}/api/address`);
+  const nextCookies = cookies();
+
+  const nextAuthSessionToken = nextCookies.get('next-auth.session-token');
+
+  const { data } = await axios.get(`${process.env.BASE_URL}/api/address`, {
+    headers: {
+      Cookie: `next-auth.session-token=${nextAuthSessionToken?.value}`,
+    },
+  });
 
   return data?.addresses;
 };
