@@ -1,7 +1,7 @@
 import { createRouter } from 'next-connect';
 import dbConnect from '@/backend/config/dbConnect';
 import { registerUser } from '@/backend/controllers/authControllers';
-import { onError } from '@/backend/middlewares/errors';
+import { CheckError } from '@/backend/middlewares/errors';
 
 const router = createRouter();
 dbConnect();
@@ -16,5 +16,5 @@ router.all((req, res) => {
 });
 
 export default router.handler({
-  onError: onError,
+  onError: CheckError,
 });

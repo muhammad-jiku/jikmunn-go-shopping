@@ -1,6 +1,6 @@
 import ErrorHandler from '../utils/ErrorHandler';
 
-export const onError = (err, req, res, next) => {
+export const CheckError = (err, req, res, next) => {
   let error = { ...err };
 
   error.statusCode = err.statusCode || 500;
