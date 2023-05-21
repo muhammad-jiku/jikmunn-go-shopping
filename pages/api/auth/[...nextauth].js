@@ -4,53 +4,107 @@ import bcrypt from 'bcryptjs';
 import NextAuth from 'next-auth/next';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-export const authOptions = {
-  // Configure one or more authentication providers
-  providers: [
-    CredentialsProvider({
-      async authorize(credentials, req) {
-        await dbConnect();
+// export const authOptions = {
+//   // Configure one or more authentication providers
+//   providers: [
+//     CredentialsProvider({
+//       async authorize(credentials, req) {
+//         await dbConnect();
 
-        const { email, password } = credentials;
+//         const { email, password } = credentials;
 
-        const user = await User.findOne({ email }).select('+password');
+//         const user = await User.findOne({ email }).select('+password');
 
-        if (!user) {
-          throw new Error('Invalid Email or Password');
-        }
+//         if (!user) {
+//           throw new Error('Invalid Email or Password');
+//         }
 
-        const isPasswordMatched = await bcrypt.compare(password, user.password);
+//         const isPasswordMatched = await bcrypt.compare(password, user.password);
 
-        if (!isPasswordMatched) {
-          throw new Error('Invalid Email or Password');
-        }
+//         if (!isPasswordMatched) {
+//           throw new Error('Invalid Email or Password');
+//         }
 
-        return user;
+//         return user;
+//       },
+//     }),
+//   ],
+//   callbacks: {
+//     jwt: async ({ token, user }) => {
+//       user && (token.user = user);
+
+//       return token;
+//     },
+//     session: async ({ session, token }) => {
+//       session.user = token.user;
+
+//       // delete password from session
+//       delete session?.user?.password;
+
+//       return session;
+//     },
+//   },
+//   pages: {
+//     signIn: '/signin',
+//   },
+//   secret: process.env.NEXTAUTH_SECRET,
+//   session: {
+//     strategy: 'jwt',
+//   },
+// };
+
+// export default NextAuth(authOptions);
+
+export default async function authOptions(req, res) {
+  return await NextAuth(req, res, {
+    // Configure one or more authentication providers
+    providers: [
+      CredentialsProvider({
+        async authorize(credentials, req) {
+          await dbConnect();
+
+          const { email, password } = credentials;
+
+          const user = await User.findOne({ email }).select('+password');
+
+          if (!user) {
+            throw new Error('Invalid Email or Password');
+          }
+
+          const isPasswordMatched = await bcrypt.compare(
+            password,
+            user.password
+          );
+
+          if (!isPasswordMatched) {
+            throw new Error('Invalid Email or Password');
+          }
+
+          return user;
+        },
+      }),
+    ],
+    callbacks: {
+      jwt: async ({ token, user }) => {
+        user && (token.user = user);
+
+        return token;
       },
-    }),
-  ],
-  callbacks: {
-    jwt: async ({ token, user }) => {
-      user && (token.user = user);
+      session: async ({ session, token }) => {
+        session.user = token.user;
 
-      return token;
+        // delete password from session
+        delete session?.user?.password;
+
+        return session;
+      },
     },
-    session: async ({ session, token }) => {
-      session.user = token.user;
-
-      // delete password from session
-      delete session?.user?.password;
-
-      return session;
+    pages: {
+      signIn: '/signin',
     },
-  },
-  pages: {
-    signIn: '/signin',
-  },
-  secret: process.env.NEXTAUTH_SECRET,
-  session: {
-    strategy: 'jwt',
-  },
-};
-
-export default NextAuth(authOptions);
+    secret: process.env.NEXTAUTH_SECRET,
+    session: {
+      strategy: 'jwt',
+    },
+  });
+}
