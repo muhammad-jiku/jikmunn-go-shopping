@@ -4,6 +4,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { countries } from 'countries-list';
 import { Sidebar } from '../layouts';
 import AuthContext from '@/context/AuthContext';
+import { toast } from 'react-toastify';
 
 const NewAddress = () => {
   const { error, addNewAddress, clearErrors } = useContext(AuthContext);
@@ -19,6 +20,7 @@ const NewAddress = () => {
 
   useEffect(() => {
     if (error) {
+      console.log(error)
       toast.error(error);
       clearErrors();
     }

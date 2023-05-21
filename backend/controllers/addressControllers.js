@@ -1,9 +1,8 @@
-import next from 'next';
 import Address from '../models/address';
 import ErrorHandler from '../utils/ErrorHandler';
 
-export const newAddress = async (req, res) => {
-  req.body.user = req.user._id;
+export const newAddress = async (req, res, next) => { 
+  req.body.user = req.user?._id;
 
   const address = await Address.create(req.body);
 
@@ -12,7 +11,7 @@ export const newAddress = async (req, res) => {
   });
 };
 
-export const getAddresses = async (req, res) => {
+export const getAddresses = async (req, res, next) => {
   const addresses = await Address.find({ user: req.user._id });
 
   res.status(200).json({
@@ -20,7 +19,7 @@ export const getAddresses = async (req, res) => {
   });
 };
 
-export const getAddress = async (req, res) => {
+export const getAddress = async (req, res, next) => {
   const address = await Address.findById(req.query.id);
 
   if (!address) {
@@ -32,7 +31,7 @@ export const getAddress = async (req, res) => {
   });
 };
 
-export const updateAddress = async (req, res) => {
+export const updateAddress = async (req, res, next) => {
   let address = await Address.findById(req.query.id);
 
   if (!address) {
@@ -46,14 +45,14 @@ export const updateAddress = async (req, res) => {
   });
 };
 
-export const deleteAddress = async (req, res) => {
-  let address = await Address.findById(req.query.id);
+export const deleteAddress = async (req, res, next) => {
+  let address = await Address.findById({ _id: req.query.id });
 
   if (!address) {
     return next(new ErrorHandler('Address not found', 404));
   }
 
-  await address.remove();
+  await address.deleteOne({ _id: req.query.id });
 
   res.status(200).json({
     success: true,
