@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import axios from 'axios';
-import { useRouter } from 'next/navigation';
-import { createContext, useState } from 'react';
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { createContext, useState } from "react";
 
 const AuthContext = createContext();
 
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
       );
 
       if (data?.user) {
-        router.push('/');
+        router.push("/");
       }
     } catch (error) {
       setError(error?.response?.data?.message);
@@ -37,11 +37,11 @@ export const AuthProvider = ({ children }) => {
     try {
       setLoading(true);
 
-      const { data } = await axios.get('/api/auth/session?update');
-
+      const { data } = await axios.get("/api/auth/session?update");
+      // console.log('data ===', data)
       if (data?.user) {
         setUser(data.user);
-        router.replace('/me');
+        router.replace("/me");
       }
     } catch (error) {
       setError(error?.response?.data?.message);
@@ -51,18 +51,17 @@ export const AuthProvider = ({ children }) => {
   const updateProfile = async (formData) => {
     try {
       setLoading(true);
-
+      // console.log('formData...', formData);
       const { data } = await axios.put(
         `${process.env.BASE_URL}/api/auth/me/update`,
         formData,
         {
           headers: {
-            // 'Content-Type': 'multipart/form-data',
-            'Content-Type': 'application/json',
+            "Content-Type": "multipart/form-data",
           },
         }
       );
-
+      // console.log('data...', data);
       if (data?.user) {
         loadUser();
         setLoading(false);
@@ -81,7 +80,7 @@ export const AuthProvider = ({ children }) => {
       );
 
       if (data) {
-        router.push('/me');
+        router.push("/me");
       }
     } catch (error) {
       setError(error?.response?.data?.message);
@@ -111,7 +110,7 @@ export const AuthProvider = ({ children }) => {
       );
 
       if (data?.success) {
-        router.push('/me');
+        router.push("/me");
       }
     } catch (error) {
       setError(error?.response?.data?.message);

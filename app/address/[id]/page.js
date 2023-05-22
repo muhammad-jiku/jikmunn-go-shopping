@@ -23,14 +23,14 @@ const getAddress = async (id) => {
     }
   );
 
-  console.log(data);
+  // console.log(data);
   return data?.address;
 };
 
 const UpdateAddressPage = async ({ params }) => {
   const address = await getAddress(params?.id);
 
-  console.log(address);
+  // console.log(address);
   return <UpdateAddress id={params?.id} address={address} />;
 };
 

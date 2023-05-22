@@ -25,7 +25,7 @@ const UpdateAddress = ({ id, address }) => {
   const [phoneNo, setPhonoNo] = useState(address.phoneNo);
   const [country, setCountry] = useState(address.country);
 
-  console.log('updated', updated);
+  // console.log('updated', updated);
 
   useEffect(() => {
     if (updated) {

@@ -20,7 +20,7 @@ const NewAddress = () => {
 
   useEffect(() => {
     if (error) {
-      console.log(error)
+      // console.log(error)
       toast.error(error);
       clearErrors();
     }

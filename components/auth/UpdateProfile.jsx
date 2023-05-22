@@ -1,17 +1,18 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect, useContext } from 'react';
-import { toast } from 'react-toastify';
-import AuthContext from '@/context/AuthContext';
+import React, { useState, useEffect, useContext } from "react";
+import { toast } from "react-toastify";
+import AuthContext from "@/context/AuthContext";
+import profileImg from "../../assets/images/default.png";
 
 const UpdateProfile = () => {
   const { user, error, loading, updateProfile, clearErrors } =
     useContext(AuthContext);
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [avatar, setAvatar] = useState('');
-  const [avatarPreview, setAvatarPreview] = useState('/images/default.png');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [avatar, setAvatar] = useState("");
+  const [avatarPreview, setAvatarPreview] = useState(`${profileImg.src}`);
 
   useEffect(() => {
     if (user) {
@@ -28,31 +29,48 @@ const UpdateProfile = () => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.set('name', name);
-    formData.set('email', email);
-    formData.set('image', avatar);
+    const formData = {
+      name,
+      email,
+      avatar,
+    };
 
+    // console.log(formData)
     updateProfile(formData);
   };
 
-  const onChange = (e) => {
-    const reader = new FileReader();
+  const onAvatarChange = (e) => {
+    const selectedFile = e.target.files[0];
 
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setAvatarPreview(reader.result);
-      }
-    };
+    if (selectedFile instanceof Blob) {
+      const reader = new FileReader();
+      reader.readAsDataURL(selectedFile);
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setAvatarPreview(reader.result);
+          setAvatar(reader.result);
+        }
+      };
+    } else {
+      console.error("The selected file is not a valid Blob object.");
+    }
 
-    setAvatar(e.target.files[0]);
-    reader.readAsDataURL(e.target.files[0]);
+    // const reader = new FileReader();
+
+    // reader.onload = () => {
+    //   if (reader.readyState === 2) {
+    //     setAvatarPreview(reader.result);
+    //   }
+    // };
+
+    // setAvatar(e.target.files[0]);
+    // reader.readAsDataURL(e.target.files[0]);
   };
 
   return (
     <>
       <div
-        style={{ maxWidth: '480px' }}
+        style={{ maxWidth: "480px" }}
         className="mt-1 mb-20 p-4 md:p-7 mx-auto rounded bg-white"
       >
         <form onSubmit={submitHandler}>
@@ -65,7 +83,8 @@ const UpdateProfile = () => {
               type="text"
               placeholder="Type your name"
               required
-              value={name}
+              // value={name}
+              defaultValue={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
@@ -77,7 +96,8 @@ const UpdateProfile = () => {
               type="text"
               placeholder="Type your email"
               required
-              value={email}
+              // value={email}
+              defaultValue={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
@@ -93,7 +113,7 @@ const UpdateProfile = () => {
                   className="form-control block w-full px-2 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none mt-6"
                   type="file"
                   id="formFile"
-                  onChange={onChange}
+                  onChange={onAvatarChange}
                 />
               </div>
             </div>
@@ -104,7 +124,7 @@ const UpdateProfile = () => {
             className="my-2 px-4 py-2 text-center w-full inline-block text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700"
             disabled={loading ? true : false}
           >
-            {loading ? 'Updating...' : 'Update'}
+            {loading ? "Updating..." : "Update"}
           </button>
         </form>
       </div>
