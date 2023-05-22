@@ -2,6 +2,8 @@ import User from "../models/user";
 import fs from "fs";
 import { uploads } from "../utils/Cloudinary";
 import cloudinary from "cloudinary";
+import ErrorHandler from "../utils/ErrorHandler";
+import bcrypt from "bcryptjs";
 
 export const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
@@ -14,6 +16,31 @@ export const registerUser = async (req, res) => {
 
   res.status(201).json({
     user,
+  });
+};
+
+export const updatePassword = async (req, res, next) => {
+  const { currentPassword, newPassword } = await req.body;
+
+  console.log("currentPassword: ", currentPassword);
+  const user = await User.findById({ _id: req?.user?._id }).select("+password");
+
+  const isPasswordMatched = await bcrypt.compare(
+    currentPassword,
+    user?.password
+  );
+
+  if (!isPasswordMatched) {
+    return next(new ErrorHandler("Old password is incorrect", 400));
+  }
+
+  console.log("newPassword: ", newPassword);
+
+  user.password = newPassword;
+  await user.save();
+
+  res.status(200).json({
+    sucess: true,
   });
 };
 
@@ -38,8 +65,6 @@ export const updateProfile = async (req, res) => {
   //   newUserData.avatar = avatarResponse;
   // }
 
-
-
   if (avatar.public_id !== "") {
     const user = await User.findById({ _id: req?.user?._id });
 
@@ -63,7 +88,7 @@ export const updateProfile = async (req, res) => {
       width: 150,
       crop: "scale",
     });
-  
+
     newUserData.avatar = {
       public_id: myCloud.public_id,
       url: myCloud.secure_url,
