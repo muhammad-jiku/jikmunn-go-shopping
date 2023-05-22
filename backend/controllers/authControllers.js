@@ -38,16 +38,7 @@ export const updateProfile = async (req, res) => {
   //   newUserData.avatar = avatarResponse;
   // }
 
-  const myCloud = await cloudinary.v2.uploader.upload(avatar, {
-    folder: "nextjs-ecommerce-demo/avatars",
-    width: 150,
-    crop: "scale",
-  });
 
-  newUserData.avatar = {
-    public_id: myCloud.public_id,
-    url: myCloud.secure_url,
-  };
 
   if (avatar.public_id !== "") {
     const user = await User.findById({ _id: req?.user?._id });
@@ -62,6 +53,17 @@ export const updateProfile = async (req, res) => {
       crop: "scale",
     });
 
+    newUserData.avatar = {
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
+    };
+  } else {
+    const myCloud = await cloudinary.v2.uploader.upload(avatar, {
+      folder: "nextjs-ecommerce-demo/avatars",
+      width: 150,
+      crop: "scale",
+    });
+  
     newUserData.avatar = {
       public_id: myCloud.public_id,
       url: myCloud.secure_url,
