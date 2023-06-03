@@ -1,23 +1,25 @@
 import mongoose from 'mongoose';
 
-const dbConnect = async () => {
-  if (mongoose.connection.readyState >= 1) {
-    return;
-  }
+let isConnected = false; // track the connection
 
-  mongoose.set('strictQuery', false);
-  await mongoose
-    .connect(process.env.DB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
-    .then(() => {
-      console.log('DB connected!!');
-    })
-    .catch((err) => {
-      console.error('Connection error', err);
-      process.exit();
-    });
+export const connectToDB = async () => {
+	mongoose.set('strictQuery', true);
+
+	if (isConnected) {
+		console.log('DB is already connected!');
+		return;
+	}
+
+	try {
+		await mongoose.connect(process.env.DB_URI, {
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+		});
+
+		isConnected = true;
+
+		console.log('DB connected!!');
+	} catch (error) {
+		console.log(error);
+	}
 };
-
-export default dbConnect;
