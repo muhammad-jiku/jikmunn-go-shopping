@@ -1,4 +1,5 @@
-import Product from '../models/product';
+ 
+import Product from '../models/Product';
 import ApiFeatures from '../utils/ApiFeatures';
 
 export const getProducts = async (req, res, next) => {

@@ -1,5 +1,5 @@
 import dbConnect from '@/backend/config/dbConnect';
-import User from '@/backend/models/user';
+import User from '@/backend/models/User';
 import bcrypt from 'bcryptjs';
 import NextAuth from 'next-auth/next';
 import CredentialsProvider from 'next-auth/providers/credentials';
