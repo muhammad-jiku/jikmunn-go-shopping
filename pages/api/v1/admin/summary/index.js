@@ -31,8 +31,15 @@ const handler = async (req, res) => {
 	const salesData = await Order.aggregate([
 		{
 			$group: {
-				_id: { $dateToString: { format: '%Y-%m', date: '$createdAt' } },
-				totalSales: { $sum: '$totalPrice' },
+				_id: {
+					$dateToString: {
+						format: '%Y-%m',
+						date: '$createdAt',
+					},
+				},
+				totalSales: {
+					$sum: '$totalPrice',
+				},
 			},
 		},
 	]);
