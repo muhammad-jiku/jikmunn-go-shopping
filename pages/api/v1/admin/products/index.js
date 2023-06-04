@@ -28,7 +28,7 @@ const handler = async (req, res) => {
 
 		const product = await newProduct.save();
 
-		return res.status(201).json({
+		return res.status(200).json({
 			success: true,
 			data: product,
 			message: 'Product created successfully',
