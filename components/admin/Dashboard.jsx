@@ -58,7 +58,7 @@ function AdminDashboardScreen() {
 		const fetchData = async () => {
 			try {
 				dispatch({ type: 'FETCH_REQUEST' });
-				const { data } = await axios.get(`/api/admin/summary`);
+				const { data } = await axios.get(`/api/v1/admin/summary`);
 				dispatch({ type: 'FETCH_SUCCESS', payload: data });
 			} catch (err) {
 				dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
