@@ -1,7 +1,8 @@
+import { ProductLists } from '@/components';
 import React from 'react';
 
 const Home = () => {
-	return <h1 className='text-1xl font-bold underline'>Hello, Next.js!</h1>;
+	return <ProductLists />;
 };
 
 export default Home;

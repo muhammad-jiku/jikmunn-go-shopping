@@ -3,22 +3,24 @@
 import React, { useEffect, useState } from 'react';
 import Filters from './Filters';
 import ProductItem from './ProductItem';
+import axios from 'axios';
 
 const ProductLists = () => {
-	const [productsData, setProductsData] = useState();
+	const [productsData, setProductsData] = useState([]);
 
+	// console.log(process.env.API_URL);
 	const getProducts = async () => {
-		const { data } = await axios.get(`${process.env.API_URL}/api/v1/products`);
-		return data.data;
+		// const { data } = await axios.get(`${process.env.API_URL}/api/v1/products`);
+		const { data } = await axios.get(`/api/v1/products`);
+		// console.log('data', data?.data);
+		setProductsData(data?.data);
+		return data?.data;
 	};
 
 	useEffect(() => {
 		getProducts();
-
-		setProductsData(data?.products);
 	}, []);
-
-	console.log(data);
+	// console.log('products data', productsData);
 
 	return (
 		<section className='py-12'>
