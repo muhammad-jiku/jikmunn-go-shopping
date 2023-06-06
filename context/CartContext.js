@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
-import { createContext, useState, useEffect } from "react";
+import { useRouter } from 'next/navigation';
+import { createContext, useState, useEffect } from 'react';
 
 const CartContext = createContext();
 
@@ -16,8 +16,8 @@ export const CartProvider = ({ children }) => {
 
   const setCartToState = () => {
     setCart(
-      localStorage.getItem("cart")
-        ? JSON.parse(localStorage.getItem("cart"))
+      localStorage.getItem('cart')
+        ? JSON.parse(localStorage.getItem('cart'))
         : []
     );
   };
@@ -55,14 +55,14 @@ export const CartProvider = ({ children }) => {
       newCartItems = [...(cart?.cartItems || []), item];
     }
 
-    localStorage.setItem("cart", JSON.stringify({ cartItems: newCartItems }));
+    localStorage.setItem('cart', JSON.stringify({ cartItems: newCartItems }));
     setCartToState();
   };
 
   const deleteItemFromCart = (id) => {
     const newCartItems = cart?.cartItems?.filter((i) => i.product !== id);
 
-    localStorage.setItem("cart", JSON.stringify({ cartItems: newCartItems }));
+    localStorage.setItem('cart', JSON.stringify({ cartItems: newCartItems }));
     setCartToState();
   };
 
