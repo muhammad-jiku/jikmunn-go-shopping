@@ -1,11 +1,25 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Filters from './Filters';
 import ProductItem from './ProductItem';
 
-const ProductLists = ({ data }) => {
+const ProductLists = () => {
+	const [productsData, setProductsData] = useState();
+
+	const getProducts = async () => {
+		const { data } = await axios.get(`${process.env.API_URL}/api/v1/products`);
+		return data.data;
+	};
+
+	useEffect(() => {
+		getProducts();
+
+		setProductsData(data?.products);
+	}, []);
+
 	console.log(data);
+
 	return (
 		<section className='py-12'>
 			<div className='container max-w-screen-xl mx-auto px-4'>
@@ -13,7 +27,7 @@ const ProductLists = ({ data }) => {
 					<Filters />
 
 					<main className='md:w-2/3 lg:w-3/4 px-3'>
-						{data?.products?.map((product) => (
+						{productsData?.map((product) => (
 							<ProductItem
 								key={product?._id}
 								product={product}
