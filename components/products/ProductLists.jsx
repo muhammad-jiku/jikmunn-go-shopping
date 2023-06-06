@@ -4,22 +4,36 @@ import React, { useEffect, useState } from 'react';
 import Filters from './Filters';
 import ProductItem from './ProductItem';
 import axios from 'axios';
+import CustomPagination from './CustomPagination';
+import queryString from 'query-string';
 
-const ProductLists = () => {
+const ProductLists = ({ searchParams }) => {
 	const [productsData, setProductsData] = useState([]);
+	const [productsDataPerPage, setProductsDataPerPage] = useState(0);
+	const [productsDataCount, setProductsDataCount] = useState(0);
 
 	// console.log(process.env.API_URL);
-	const getProducts = async () => {
-		// const { data } = await axios.get(`${process.env.API_URL}/api/v1/products`);
-		const { data } = await axios.get(`/api/v1/products`);
+	const getProducts = async (searchParams) => {
+		const urlParams = {
+			keyword: searchParams?.keyword,
+			page: searchParams?.page,
+		};
+
+		const searchQuery = queryString.stringify(urlParams);
+
+		// const { data } = await axios.get(`${process.env.API_URL}/api/v1/products?${searchQuery}`);
+		const { data } = await axios.get(`/api/v1/products?${searchQuery}`);
 		// console.log('data', data?.data);
 		setProductsData(data?.data);
+		setProductsDataPerPage(data?.resPerPage);
+		setProductsDataCount(data?.filteredProductsCount);
+
 		return data?.data;
 	};
 
 	useEffect(() => {
-		getProducts();
-	}, []);
+		getProducts(searchParams);
+	}, [searchParams]);
 	console.log('products data', productsData);
 
 	return (
@@ -35,6 +49,11 @@ const ProductLists = () => {
 								product={product}
 							/>
 						))}
+
+						<CustomPagination
+							resPerPage={productsDataPerPage}
+							productsCount={productsDataCount}
+						/>
 					</main>
 				</div>
 			</div>
