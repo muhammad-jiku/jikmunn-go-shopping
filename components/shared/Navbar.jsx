@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import logoImg from '../../assets/images/logo.png';
 import profileImg from '../../assets/images/default_profile_avatar.png';
+import Search from './Search';
 
 const Navbar = () => {
 	return (
@@ -17,10 +18,11 @@ const Navbar = () => {
 								src={logoImg.src}
 								height='40'
 								width='120'
-								alt='BuyItNow'
+								alt='GoShopping'
 							/>
 						</a>
 					</div>
+					<Search />
 
 					<div className='flex items-center space-x-2 ml-auto'>
 						<Link
@@ -56,7 +58,6 @@ const Navbar = () => {
 							</div>
 						</Link>
 					</div>
-
 					<div className='lg:hidden ml-2'>
 						<button
 							type='button'
