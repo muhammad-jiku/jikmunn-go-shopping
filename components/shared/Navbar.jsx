@@ -6,6 +6,8 @@ import Image from 'next/image';
 import logoImg from '../../assets/images/logo.png';
 import profileImg from '../../assets/images/default_profile_avatar.png';
 import Search from './Search';
+import { BsCart, BsFillPersonFill } from 'react-icons/bs';
+import { FaBars } from 'react-icons/fa';
 
 const Navbar = () => {
 	return (
@@ -29,16 +31,14 @@ const Navbar = () => {
 							href='/cart'
 							className='px-3 py-2 inline-block text-center text-gray-700 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 hover:border-gray-300'
 						>
-							<i className='text-gray-400 w-5 fa fa-shopping-cart'></i>
-							<span className='hidden lg:inline ml-1'>
-								Cart (<b>0</b>)
-							</span>
+							<BsCart className='inline lg:hidden ml-1' />
+							<span className='hidden lg:inline ml-1'>Cart</span> (<b>0</b>)
 						</Link>
 						<Link
 							href='/login'
 							className='px-3 py-2 inline-block text-center text-gray-700 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 hover:border-gray-300'
 						>
-							<i className='text-gray-400 w-5 fa fa-user'></i>
+							<BsFillPersonFill className='inline lg:hidden ml-1' />
 							<span className='hidden lg:inline ml-1'>Sign in</span>
 						</Link>
 						<Link href='/me'>
@@ -46,6 +46,7 @@ const Navbar = () => {
 								<img
 									className='w-10 h-10 rounded-full'
 									src={profileImg.src}
+									loading='lazy'
 								/>
 								<div className='space-y-1 font-medium'>
 									<p>
@@ -64,7 +65,7 @@ const Navbar = () => {
 							className='bg-white p-3 inline-flex items-center rounded-md text-black hover:bg-gray-200 hover:text-gray-800 border border-transparent'
 						>
 							<span className='sr-only'>Open menu</span>
-							<i className='fa fa-bars fa-lg'></i>
+							<FaBars />
 						</button>
 					</div>
 				</div>
