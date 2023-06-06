@@ -10,7 +10,7 @@ export const newProduct = async (req, res, next) => {
 			message: 'Product added successfully',
 		});
 	} catch (error) {
-		// console.log(error);
+		console.log(error);
 		return res.status(500).json({
 			success: false,
 			message: 'Something went wrong',
