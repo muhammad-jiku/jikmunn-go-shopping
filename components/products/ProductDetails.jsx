@@ -1,26 +1,44 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import StarRatings from 'react-star-ratings';
 import { BsCart } from 'react-icons/bs';
 import BreadCrumbs from './BreadCrumbs';
+import axios from 'axios';
+import productImg from '../../assets/images/default_product.png';
 
-const ProductDetails = ({ product }) => {
+const ProductDetails = ({ params }) => {
+	const [productData, setProductData] = useState([]);
+
+	const getProductDetails = async (id) => {
+		// const { data } = await axios.get(`${process.env.API_URL}/api/v1/products/${id}`);
+		const { data } = await axios.get(`/api/v1/products/${id}`);
+		// console.log('data', data?.data);
+		setProductData(data?.data);
+		return data?.data;
+	};
+
+	useEffect(() => {
+		getProductDetails(params?.id);
+	}, [params?.id]);
+	// console.log('product data', productData);
+
 	const imgRef = useRef(null);
 
 	const setImgPreview = (url) => {
 		imgRef.current.src = url;
 	};
 
-	const inStock = product?.stock >= 1;
+	const inStock = productData?.stock >= 10;
 
 	const breadCrumbs = [
 		{ name: 'Home', url: '/' },
 		{
-			name: `${product?.name?.substring(0, 100)} ...`,
-			url: `/products/${product?._id}`,
+			name: `${productData?.name?.substring(0, 100)} ...`,
+			url: `/products/${productData?._id}`,
 		},
 	];
+
 	return (
 		<>
 			<BreadCrumbs breadCrumbs={breadCrumbs} />
@@ -33,9 +51,9 @@ const ProductDetails = ({ product }) => {
 									ref={imgRef}
 									className='object-cover inline-block'
 									src={
-										product?.images[0]
-											? product?.images[0].url
-											: '/images/default_product.png'
+										productData?.images?.[0]
+											? productData?.images?.[0]?.url
+											: productImg.src
 									}
 									alt='Product title'
 									width='340'
@@ -43,7 +61,7 @@ const ProductDetails = ({ product }) => {
 								/>
 							</div>
 							<div className='space-x-2 overflow-auto text-center whitespace-nowrap'>
-								{product?.images?.map((img, index) => (
+								{productData?.images?.map((img, index) => (
 									<a
 										key={index}
 										className='inline-block border border-gray-200 p-1 rounded-md hover:border-blue-500 cursor-pointer'
@@ -61,12 +79,14 @@ const ProductDetails = ({ product }) => {
 							</div>
 						</aside>
 						<main>
-							<h2 className='font-semibold text-2xl mb-4'>{product?.name}</h2>
+							<h2 className='font-semibold text-2xl mb-4'>
+								{productData?.name}
+							</h2>
 
 							<div className='flex flex-wrap items-center space-x-2 mb-2'>
 								<div className='ratings'>
 									<StarRatings
-										rating={product?.ratings}
+										rating={productData?.ratings}
 										starRatedColor='#ffb829'
 										numberOfStars={5}
 										starDimension='20px'
@@ -74,7 +94,7 @@ const ProductDetails = ({ product }) => {
 										name='rating'
 									/>
 								</div>
-								<span className='text-yellow-500'>{product?.ratings}</span>
+								<span className='text-yellow-500'>{productData?.ratings}</span>
 
 								<svg
 									width='6px'
@@ -93,14 +113,19 @@ const ProductDetails = ({ product }) => {
 								<span className='text-green-500'>Verified</span>
 							</div>
 
-							<p className='mb-4 font-semibold text-xl'>${product?.price}</p>
+							<p className='mb-4 font-semibold text-xl'>
+								${productData?.price}
+							</p>
 
-							<p className='mb-4 text-gray-500'>{product?.description}</p>
+							<p className='mb-4 text-gray-500'>{productData?.description}</p>
 
 							<div className='flex flex-wrap gap-2 mb-5'>
-								<button className='px-4 py-2 inline-block text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700'>
-									<BsCart />
-									Add to cart
+								<button
+									className='px-4 py-2 flex justify-around items-center text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700'
+									disabled={inStock ? false : true}
+								>
+									<BsCart className='text-2xl' />
+									<span className='ml-1'> Add to cart</span>
 								</button>
 							</div>
 
@@ -117,14 +142,14 @@ const ProductDetails = ({ product }) => {
 								<li className='mb-1'>
 									{' '}
 									<b className='font-medium w-36 inline-block'>Category:</b>
-									<span className='text-gray-500'>{product?.category}</span>
+									<span className='text-gray-500'>{productData?.category}</span>
 								</li>
 								<li className='mb-1'>
 									{' '}
 									<b className='font-medium w-36 inline-block'>
 										Seller / Brand:
 									</b>
-									<span className='text-gray-500'>{product?.seller}</span>
+									<span className='text-gray-500'>{productData?.seller}</span>
 								</li>
 							</ul>
 						</main>

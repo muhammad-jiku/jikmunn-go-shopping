@@ -20,7 +20,7 @@ const ProductLists = () => {
 	useEffect(() => {
 		getProducts();
 	}, []);
-	// console.log('products data', productsData);
+	console.log('products data', productsData);
 
 	return (
 		<section className='py-12'>

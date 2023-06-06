@@ -20,7 +20,9 @@ const BreadCrumbs = ({ breadCrumbs }) => {
 							>
 								{breadCrumb.name}
 							</Link>
-							{breadCrumbs?.length - 1 !== index && <BiRightArrow />}
+							{breadCrumbs?.length - 1 !== index && (
+								<BiRightArrow className='ml-1' />
+							)}
 						</li>
 					))}
 				</ol>
