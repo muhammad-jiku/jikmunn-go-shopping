@@ -59,14 +59,14 @@ const Navbar = () => {
                 className='px-3 py-2 inline-block text-center text-gray-700 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 hover:border-gray-300'
               >
                 <BsFillPersonFill className='inline lg:hidden ml-1' />
-                <span className='hidden lg:inline ml-1'>Sign in</span>
+                <span className='hidden lg:inline ml-1'>Sign In</span>
               </Link>
             ) : (
               <Link href='/me'>
                 <div className='flex items-center mb-4 space-x-3 mt-4 cursor-pointer'>
                   <img
                     className='w-10 h-10 rounded-full'
-                    src={profileImg.src}
+                    src={user?.avatar?.url || profileImg.src}
                     loading='lazy'
                   />
                   <div className='space-y-1 font-medium'>
