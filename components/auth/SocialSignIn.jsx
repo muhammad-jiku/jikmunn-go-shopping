@@ -3,15 +3,30 @@
 import React from 'react';
 import googleLogo from '../../assets/images/google.png';
 import { signIn } from 'next-auth/react';
+import { parseCallbackUrl } from '@/helpers';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 const SocialSignIn = () => {
+  const router = useRouter();
+  const params = useSearchParams();
+  const callBackUrl = params.get('callbackUrl');
+
   const handleGoogleLogin = async () => {
     console.log('google sign in');
     try {
-      await signIn('google', {
-        callbackUrl: '/',
+      const data = await signIn('google', {
+        callbackUrl: callBackUrl ? parseCallbackUrl(callBackUrl) : '/',
       });
+
+      if (data?.error) {
+        toast.error(data?.error);
+      }
+      if (data?.ok) {
+        router.push('/');
+      }
     } catch (err) {
+      toast.error(err?.message);
       console.log('google error => ', err);
     }
   };

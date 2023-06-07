@@ -3,15 +3,18 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import SocialSignIn from './SocialSignIn';
+import { parseCallbackUrl } from '@/helpers';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const router = useRouter();
+  const params = useSearchParams();
+  const callBackUrl = params.get('callbackUrl');
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -19,7 +22,7 @@ const SignIn = () => {
     const data = await signIn('credentials', {
       email,
       password,
-      redirect: false,
+      callbackUrl: callBackUrl ? parseCallbackUrl(callBackUrl) : '/',
     });
 
     if (data?.error) {
