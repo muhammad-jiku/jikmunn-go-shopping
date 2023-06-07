@@ -75,7 +75,7 @@ const SignIn = () => {
         <p className='text-center mt-5'>
           Don&apos;t have an account?{' '}
           <Link href='/sign-up' className='text-blue-500'>
-            Register
+            Sign Up
           </Link>
         </p>
       </form>
