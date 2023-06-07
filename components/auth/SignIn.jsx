@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
+import SocialSignIn from './SocialSignIn';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -69,16 +70,17 @@ const SignIn = () => {
         >
           Sign In
         </button>
-
-        <hr className='mt-4' />
-
-        <p className='text-center mt-5'>
+        <p className='text-center mt-2'>
           Don&apos;t have an account?{' '}
           <Link href='/sign-up' className='text-blue-500'>
             Sign Up
           </Link>
         </p>
       </form>
+      <div className='divider'>OR</div>
+      <div className='my-2'>
+        <SocialSignIn />
+      </div>
     </div>
   );
 };

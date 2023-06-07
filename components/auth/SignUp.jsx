@@ -4,6 +4,7 @@ import AuthContext from '@/context/AuthContext';
 import Link from 'next/link';
 import React, { useState, useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import SocialSignIn from './SocialSignIn';
 
 const SignUp = () => {
   const { error, signUpUser, clearErrors } = useContext(AuthContext);
@@ -78,16 +79,17 @@ const SignUp = () => {
         >
           Sign Up
         </button>
-
-        <hr className='mt-4' />
-
-        <p className='text-center mt-5'>
-          Already have an account?
+        <p className='text-center mt-2'>
+          Already have an account?{' '}
           <Link href='/sign-in' className='text-blue-500'>
-            Sign in
+            Sign In
           </Link>
         </p>
       </form>
+      <div className='divider'>OR</div>
+      <div className='my-2'>
+        <SocialSignIn />
+      </div>
     </div>
   );
 };
