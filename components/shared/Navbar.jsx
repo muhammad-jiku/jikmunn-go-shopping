@@ -40,7 +40,7 @@ const Navbar = () => {
               <b>{cartItems?.length || 0}</b>)
             </Link>
             <Link
-              href='/login'
+              href='/sign-in'
               className='px-3 py-2 inline-block text-center text-gray-700 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 hover:border-gray-300'
             >
               <BsFillPersonFill className='inline lg:hidden ml-1' />
