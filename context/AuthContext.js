@@ -32,6 +32,22 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const addNewAddress = async (address) => {
+    try {
+      const { data } = await axios.post(
+        // `${process.env.API_URL}/api/v1/address/new`,
+        `/api/v1/address/new`,
+        address
+      );
+
+      if (data) {
+        router.push('/me');
+      }
+    } catch (error) {
+      setError(error?.response?.data?.message);
+    }
+  };
+
   const clearErrors = () => {
     setError(null);
   };
@@ -43,6 +59,7 @@ export const AuthProvider = ({ children }) => {
         error,
         setUser,
         signUpUser,
+        addNewAddress,
         clearErrors,
       }}
     >
