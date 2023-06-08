@@ -75,7 +75,30 @@ export const updateAddress = async (req, res) => {
     return res.status(200).json({
       success: true,
       data: address,
-      message: 'address displayed successfully!',
+      message: 'address updated successfully!',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong',
+    });
+  }
+};
+
+export const deleteAddress = async (req, res) => {
+  try {
+    let address = await Address.findById({ _id: req.query.id });
+
+    if (!address) {
+      return next(new ErrorHandler('Address not found', 404));
+    }
+
+    await address.remove();
+
+    return res.status(200).json({
+      success: true,
+      message: 'address deleted successfully!',
     });
   } catch (error) {
     console.log(error);
