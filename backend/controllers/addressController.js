@@ -2,6 +2,7 @@ import Address from '../models/Address';
 
 export const newAddress = async (req, res) => {
   try {
+    req.body.user = await req.user._id;
     const address = await Address.create(req.body);
 
     return res.status(201).json({
