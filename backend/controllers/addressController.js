@@ -1,4 +1,5 @@
 import Address from '../models/Address';
+import ErrorHandler from '../utils/ErrorHandler';
 
 export const newAddress = async (req, res) => {
   try {
@@ -29,6 +30,28 @@ export const getAddresses = async (req, res) => {
       success: true,
       data: addresses,
       message: 'addresses displayed successfully!',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong',
+    });
+  }
+};
+
+export const getAddress = async (req, res) => {
+  try {
+    const address = await Address.findById({ _id: req.query.id });
+
+    if (!address) {
+      return next(new ErrorHandler('Address not found', 404));
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: address,
+      message: 'address displayed successfully!',
     });
   } catch (error) {
     console.log(error);
