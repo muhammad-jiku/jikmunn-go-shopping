@@ -18,12 +18,12 @@ const UpdateAddress = ({ id, address }) => {
 
   const countriesList = Object.values(countries);
 
-  const [street, setStreet] = useState(address.street);
-  const [city, setCity] = useState(address.city);
-  const [state, setState] = useState(address.state);
-  const [zipCode, setZipCode] = useState(address.zipCode);
-  const [phoneNo, setPhonoNo] = useState(address.phoneNo);
-  const [country, setCountry] = useState(address.country);
+  const [street, setStreet] = useState(address?.street);
+  const [city, setCity] = useState(address?.city);
+  const [state, setState] = useState(address?.state);
+  const [zipCode, setZipCode] = useState(address?.zipCode);
+  const [phoneNo, setPhonoNo] = useState(address?.phoneNo);
+  const [country, setCountry] = useState(address?.country);
 
   console.log('updated', updated);
 

@@ -7,3 +7,4 @@ export { default as SignUp } from './auth/SignUp';
 export { default as SideBar } from './dashboard/SideBar';
 export { default as Profile } from './dashboard/Profile';
 export { default as NewAddress } from './dashboard/user/NewAddress';
+export { default as UpdateAddress } from './dashboard/user/UpdateAddress';

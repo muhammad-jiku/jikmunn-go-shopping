@@ -7,11 +7,11 @@ import { createContext, useState } from 'react';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const router = useRouter();
+
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const [updated, setUpdated] = useState(false);
-
-  const router = useRouter();
 
   const signUpUser = async ({ name, email, password }) => {
     try {
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
 
       if (data?.address) {
         setUpdated(true);
-        router.replace(`/address/${id}`);
+        router.replace(`/dashboard/user/address/${id}`);
       }
     } catch (error) {
       setError(error?.response?.data?.message);
