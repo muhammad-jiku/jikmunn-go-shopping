@@ -1,29 +1,14 @@
 'use client';
 
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useRef } from 'react';
 import StarRatings from 'react-star-ratings';
 import { BsCart } from 'react-icons/bs';
 import BreadCrumbs from './BreadCrumbs';
-import axios from 'axios';
 import productImg from '../../assets/images/default_product.png';
 import CartContext from '@/context/CartContext';
 
-const ProductDetails = ({ params }) => {
+const ProductDetails = ({ product }) => {
   const { addItemToCart } = useContext(CartContext);
-  const [productData, setProductData] = useState([]);
-
-  const getProductDetails = async (id) => {
-    // const { data } = await axios.get(`${process.env.API_URL}/api/v1/products/${id}`);
-    const { data } = await axios.get(`/api/v1/products/${id}`);
-    // console.log('data', data?.data);
-    setProductData(data?.data);
-    return data?.data;
-  };
-
-  useEffect(() => {
-    getProductDetails(params?.id);
-  }, [params?.id]);
-  // console.log('product data', productData);
 
   const imgRef = useRef(null);
 
@@ -31,24 +16,24 @@ const ProductDetails = ({ params }) => {
     imgRef.current.src = url;
   };
 
-  const inStock = productData?.stock >= 10;
+  const inStock = product?.stock >= 10;
 
   const addToCartHandler = () => {
     addItemToCart({
-      product: productData?._id,
-      name: productData?.name,
-      price: productData?.price,
-      image: productData?.images[0].url,
-      stock: productData?.stock,
-      seller: productData?.seller,
+      product: product?._id,
+      name: product?.name,
+      price: product?.price,
+      image: product?.images?.[0]?.url,
+      stock: product?.stock,
+      seller: product?.seller,
     });
   };
 
   const breadCrumbs = [
     { name: 'Home', url: '/' },
     {
-      name: `${productData?.name?.substring(0, 100)} ...`,
-      url: `/products/${productData?._id}`,
+      name: `${product?.name?.substring(0, 100)} ...`,
+      url: `/products/${product?._id}`,
     },
   ];
 
@@ -64,8 +49,8 @@ const ProductDetails = ({ params }) => {
                   ref={imgRef}
                   className='object-cover inline-block'
                   src={
-                    productData?.images?.[0]
-                      ? productData?.images?.[0]?.url
+                    product?.images?.[0]
+                      ? product?.images?.[0]?.url
                       : productImg.src
                   }
                   alt='Product title'
@@ -74,7 +59,7 @@ const ProductDetails = ({ params }) => {
                 />
               </div>
               <div className='space-x-2 overflow-auto text-center whitespace-nowrap'>
-                {productData?.images?.map((img, index) => (
+                {product?.images?.map((img, index) => (
                   <a
                     key={index}
                     className='inline-block border border-gray-200 p-1 rounded-md hover:border-blue-500 cursor-pointer'
@@ -92,14 +77,12 @@ const ProductDetails = ({ params }) => {
               </div>
             </aside>
             <main>
-              <h2 className='font-semibold text-2xl mb-4'>
-                {productData?.name}
-              </h2>
+              <h2 className='font-semibold text-2xl mb-4'>{product?.name}</h2>
 
               <div className='flex flex-wrap items-center space-x-2 mb-2'>
                 <div className='ratings'>
                   <StarRatings
-                    rating={productData?.ratings}
+                    rating={product?.ratings}
                     starRatedColor='#ffb829'
                     numberOfStars={5}
                     starDimension='20px'
@@ -107,7 +90,7 @@ const ProductDetails = ({ params }) => {
                     name='rating'
                   />
                 </div>
-                <span className='text-yellow-500'>{productData?.ratings}</span>
+                <span className='text-yellow-500'>{product?.ratings}</span>
 
                 <svg
                   width='6px'
@@ -121,11 +104,9 @@ const ProductDetails = ({ params }) => {
                 <span className='text-green-500'>Verified</span>
               </div>
 
-              <p className='mb-4 font-semibold text-xl'>
-                ${productData?.price}
-              </p>
+              <p className='mb-4 font-semibold text-xl'>${product?.price}</p>
 
-              <p className='mb-4 text-gray-500'>{productData?.description}</p>
+              <p className='mb-4 text-gray-500'>{product?.description}</p>
 
               <div className='flex flex-wrap gap-2 mb-5'>
                 <button
@@ -151,14 +132,14 @@ const ProductDetails = ({ params }) => {
                 <li className='mb-1'>
                   {' '}
                   <b className='font-medium w-36 inline-block'>Category:</b>
-                  <span className='text-gray-500'>{productData?.category}</span>
+                  <span className='text-gray-500'>{product?.category}</span>
                 </li>
                 <li className='mb-1'>
                   {' '}
                   <b className='font-medium w-36 inline-block'>
                     Seller / Brand:
                   </b>
-                  <span className='text-gray-500'>{productData?.seller}</span>
+                  <span className='text-gray-500'>{product?.seller}</span>
                 </li>
               </ul>
             </main>
