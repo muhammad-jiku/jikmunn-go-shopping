@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { countries } from 'countries-list';
 import AuthContext from '@/context/AuthContext';
 import SideBar from '../SideBar';
+import { toast } from 'react-toastify';
 
 const NewAddress = () => {
   const { error, addNewAddress, clearErrors } = useContext(AuthContext);
@@ -16,6 +17,13 @@ const NewAddress = () => {
   const [zipCode, setZipCode] = useState('');
   const [phoneNo, setPhonoNo] = useState('');
   const [country, setCountry] = useState('');
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      clearErrors();
+    }
+  }, [error, clearErrors]);
 
   const submitHandler = (e) => {
     e.preventDefault();
