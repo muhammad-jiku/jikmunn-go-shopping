@@ -14,7 +14,9 @@ import nc from 'next-connect';
 // 	}
 // }
 
-const handler = nc({ onError: ErrorHandlingChecker });
+const handler = nc({
+  onError: ErrorHandlingChecker,
+});
 
 connectToDB();
 

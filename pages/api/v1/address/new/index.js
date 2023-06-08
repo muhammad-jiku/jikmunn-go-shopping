@@ -1,4 +1,6 @@
 import { newAddress } from '@/backend/controllers/addressController';
+import { isAuthenticatedUser } from '@/backend/middlewares/auth';
+import ErrorHandlingChecker from '@/backend/middlewares/errors';
 import { connectToDB } from '@/backend/utils/dbConnection';
 import nc from 'next-connect';
 
@@ -13,10 +15,12 @@ import nc from 'next-connect';
 // 	}
 // }
 
-const handler = nc();
+const handler = nc({
+  onError: ErrorHandlingChecker,
+});
 
 connectToDB();
 
-handler.post(newAddress);
+handler.use(isAuthenticatedUser).post(newAddress);
 
 export default handler;

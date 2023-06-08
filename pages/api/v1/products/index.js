@@ -1,4 +1,5 @@
 import { getProducts } from '@/backend/controllers/productController';
+import ErrorHandlingChecker from '@/backend/middlewares/errors';
 import { connectToDB } from '@/backend/utils/dbConnection';
 import nc from 'next-connect';
 
@@ -13,7 +14,9 @@ import nc from 'next-connect';
 // 	}
 // }
 
-const handler = nc();
+const handler = nc({
+  onError: ErrorHandlingChecker,
+});
 
 connectToDB();
 
