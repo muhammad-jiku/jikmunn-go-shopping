@@ -5,7 +5,8 @@ import Link from 'next/link';
 import CartContext from '@/context/CartContext';
 
 const Cart = () => {
-  const { addItemToCart, deleteItemFromCart, cart } = useContext(CartContext);
+  const { addItemToCart, deleteItemFromCart, cart, saveOnCheckout } =
+    useContext(CartContext);
 
   const increaseQty = (cartItem) => {
     const newQty = cartItem?.quantity + 1;
@@ -33,6 +34,16 @@ const Cart = () => {
   const taxAmount = (amountWithoutTax * 0.15).toFixed(2);
 
   const totalAmount = (Number(amountWithoutTax) + Number(taxAmount)).toFixed(2);
+
+  const checkoutHandler = () => {
+    const data = {
+      amount: amountWithoutTax,
+      tax: taxAmount,
+      totalAmount,
+    };
+
+    saveOnCheckout(data);
+  };
 
   return (
     <>
@@ -159,7 +170,10 @@ const Cart = () => {
                     </li>
                   </ul>
 
-                  <a className='px-4 py-3 mb-2 inline-block text-lg w-full text-center font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 cursor-pointer'>
+                  <a
+                    className='px-4 py-3 mb-2 inline-block text-lg w-full text-center font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 cursor-pointer'
+                    onClick={checkoutHandler}
+                  >
                     Continue
                   </a>
 
