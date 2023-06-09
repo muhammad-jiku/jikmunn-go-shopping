@@ -1,6 +1,8 @@
 import User from '../models/User';
 import ErrorHandler from '../utils/ErrorHandler';
 import bcrypt from 'bcryptjs';
+import fs from 'fs';
+import { uploads } from '../utils/cloudinaryFile';
 
 export const registerUser = async (req, res) => {
   try {
