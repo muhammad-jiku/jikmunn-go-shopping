@@ -11,3 +11,4 @@ export { default as UpdateProfile } from './dashboard/UpdateProfile';
 export { default as UpdatePassword } from './dashboard/UpdatePassword';
 export { default as NewAddress } from './dashboard/user/address/NewAddress';
 export { default as UpdateAddress } from './dashboard/user/address/UpdateAddress';
+export { default as OrderLists } from './dashboard/user/orders/OrderLists';
