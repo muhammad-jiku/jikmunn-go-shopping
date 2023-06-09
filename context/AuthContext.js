@@ -64,6 +64,8 @@ export const AuthProvider = ({ children }) => {
         }
       );
 
+      console.log('user data', data);
+
       if (data?.user) {
         loadUser();
         setLoading(false);
@@ -77,8 +79,8 @@ export const AuthProvider = ({ children }) => {
   const updatePassword = async ({ currentPassword, newPassword }) => {
     try {
       const { data } = await axios.put(
-        // `${process.env.API_URL}/api/auth/me/update-password`,
-        `/api/auth/me/update-password`,
+        // `${process.env.API_URL}/api/auth/me/update/password`,
+        `/api/auth/me/update/password`,
         {
           currentPassword,
           newPassword,
@@ -120,7 +122,7 @@ export const AuthProvider = ({ children }) => {
       console.log('address data:', data);
       if (data?.address) {
         setUpdated(true);
-        router.replace(`/dashboard/user/address/${id}`);
+        router.replace(`/me/address/${id}`);
       }
 
       if (data?.success) {

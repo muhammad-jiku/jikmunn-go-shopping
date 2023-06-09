@@ -33,7 +33,7 @@ const Profile = ({ addresses }) => {
 
       <UserAddresses addresses={addresses} />
 
-      <Link href='/dashboard/user/address'>
+      <Link href='/me/address'>
         <button className='flex justify-around items-center px-4 py-2 text-blue-600 border border-gray-300 rounded-md hover:bg-gray-100'>
           <BsPlusLg className='mr-1 font-extrabold' />{' '}
           <span> Add new address</span>
