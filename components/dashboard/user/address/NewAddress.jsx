@@ -3,7 +3,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { countries } from 'countries-list';
 import AuthContext from '@/context/AuthContext';
-import SideBar from '../SideBar';
+import SideBar from '../../SideBar';
 import { toast } from 'react-toastify';
 
 const NewAddress = () => {
