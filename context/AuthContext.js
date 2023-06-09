@@ -74,6 +74,26 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const updatePassword = async ({ currentPassword, newPassword }) => {
+    try {
+      const { data } = await axios.put(
+        // `${process.env.API_URL}/api/auth/me/update-password`,
+        `/api/auth/me/update-password`,
+        {
+          currentPassword,
+          newPassword,
+        }
+      );
+
+      if (data?.success) {
+        router.replace('/me');
+      }
+    } catch (error) {
+      console.log(error.response);
+      setError(error?.response?.data?.message);
+    }
+  };
+
   const addNewAddress = async (address) => {
     try {
       const { data } = await axios.post(
@@ -97,10 +117,14 @@ export const AuthProvider = ({ children }) => {
         `/api/v1/address/${id}`,
         address
       );
-
+      console.log('address data:', data);
       if (data?.address) {
         setUpdated(true);
         router.replace(`/dashboard/user/address/${id}`);
+      }
+
+      if (data?.success) {
+        router.replace('/me');
       }
     } catch (error) {
       setError(error?.response?.data?.message);
@@ -135,6 +159,7 @@ export const AuthProvider = ({ children }) => {
         setUser,
         signUpUser,
         updateProfile,
+        updatePassword,
         updated,
         setUpdated,
         addNewAddress,
