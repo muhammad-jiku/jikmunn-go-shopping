@@ -1,4 +1,6 @@
 import User from '../models/User';
+import ErrorHandler from '../utils/ErrorHandler';
+import bcrypt from 'bcryptjs';
 
 export const registerUser = async (req, res) => {
   try {
@@ -49,6 +51,36 @@ export const updateProfile = async (req, res) => {
       success: true,
       data: user,
       message: 'User updated successfully',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong',
+    });
+  }
+};
+
+export const updatePassword = async (req, res, next) => {
+  try {
+    const user = await User.findById({ _id: req.user._id }).select('+password');
+
+    const isPasswordMatched = await bcrypt.compare(
+      req.body.currentPassword,
+      user.password
+    );
+
+    if (!isPasswordMatched) {
+      return next(new ErrorHandler('Old password is incorrect', 400));
+    }
+
+    user.password = req.body.newPassword;
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      data: user,
+      message: 'Password updated successfully',
     });
   } catch (error) {
     console.log(error);
