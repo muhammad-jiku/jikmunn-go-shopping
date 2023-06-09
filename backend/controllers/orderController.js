@@ -2,6 +2,36 @@ import Stripe from 'stripe';
 import Order from '../models/Order';
 const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
 import getRawBody from 'raw-body';
+import APIFilters from '../utils/ApiFilters';
+
+export const myOrders = async (req, res) => {
+  try {
+    const resPerPage = 2;
+    const ordersCount = await Order.countDocuments();
+
+    const apiFilters = new APIFilters(Order.find({}), req.query).pagination(
+      resPerPage
+    );
+
+    const orders = await apiFilters.query
+      .find({ user: req.user._id })
+      .populate('shippingInfo user');
+
+    return res.status(200).json({
+      success: true,
+      ordersCount,
+      resPerPage,
+      data: orders,
+      message: 'User orders displayed successfully!',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong',
+    });
+  }
+};
 
 export const checkoutSession = async (req, res) => {
   try {

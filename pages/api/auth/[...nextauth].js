@@ -14,6 +14,9 @@ console.log({
   CLOUDINARY_API_KEY: `${process.env.CLOUDINARY_API_KEY}`,
   CLOUDINARY_API_SECRET: `${process.env.CLOUDINARY_API_SECRET}`,
   CLOUDINARY_API_URL: `${process.env.CLOUDINARY_API_URL}`,
+  STRIPE_PUBLIC_KEY: `${process.env.STRIPE_PUBLIC_KEY}`,
+  STRIPE_PRIVATE_KEY: `${process.env.STRIPE_PRIVATE_KEY}`,
+  STRIPE_WEBHOOK_SECRET: `${process.env.STRIPE_WEBHOOK_SECRET}`,
 });
 
 export const authOptions = {
