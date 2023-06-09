@@ -94,7 +94,7 @@ export const deleteAddress = async (req, res) => {
       return next(new ErrorHandler('Address not found', 404));
     }
 
-    await address.remove();
+    await address.deleteOne({ _id: req.query.id });
 
     return res.status(200).json({
       success: true,
