@@ -1,9 +1,9 @@
 'use client';
 
-import React  from 'react';
+import React from 'react';
 import Filters from './Filters';
 import ProductItem from './ProductItem';
-import CustomPagination from './CustomPagination';
+import CustomPagination from '../shared/CustomPagination';
 
 const ProductLists = ({ data }) => {
   return (
