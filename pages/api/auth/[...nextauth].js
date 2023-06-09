@@ -10,6 +10,10 @@ console.log({
   NEXTAUTH_URL: `${process.env.NEXTAUTH_URL}`,
   GOOGLE_CLIENT_ID: `${process.env.GOOGLE_CLIENT_ID}`,
   GOOGLE_CLIENT_SECRET: `${process.env.GOOGLE_CLIENT_SECRET}`,
+  CLOUDINARY_NAME: `${process.env.CLOUDINARY_NAME}`,
+  CLOUDINARY_API_KEY: `${process.env.CLOUDINARY_API_KEY}`,
+  CLOUDINARY_API_SECRET: `${process.env.CLOUDINARY_API_SECRET}`,
+  CLOUDINARY_API_URL: `${process.env.CLOUDINARY_API_URL}`,
 });
 
 export const authOptions = {
