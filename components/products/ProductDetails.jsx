@@ -3,9 +3,9 @@
 import React, { useContext, useRef } from 'react';
 import StarRatings from 'react-star-ratings';
 import { BsCart } from 'react-icons/bs';
-import BreadCrumbs from './BreadCrumbs';
 import productImg from '../../assets/images/default_product.png';
 import CartContext from '@/context/CartContext';
+import BreadCrumbs from '../shared/BreadCrumbs';
 
 const ProductDetails = ({ product }) => {
   const { addItemToCart } = useContext(CartContext);
