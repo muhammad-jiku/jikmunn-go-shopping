@@ -80,6 +80,11 @@ export const CartProvider = ({ children }) => {
     setCartToState();
   };
 
+  const clearCart = () => {
+    localStorage.removeItem('cart');
+    setCartToState();
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -87,6 +92,7 @@ export const CartProvider = ({ children }) => {
         addItemToCart,
         saveOnCheckout,
         deleteItemFromCart,
+        clearCart,
       }}
     >
       {children}
