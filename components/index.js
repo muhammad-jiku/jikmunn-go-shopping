@@ -7,5 +7,6 @@ export { default as SignUp } from './auth/SignUp';
 export { default as SideBar } from './dashboard/SideBar';
 export { default as Profile } from './dashboard/Profile';
 export { default as UpdateProfile } from './dashboard/UpdateProfile';
+export { default as UpdatePassword } from './dashboard/UpdatePassword';
 export { default as NewAddress } from './dashboard/user/NewAddress';
 export { default as UpdateAddress } from './dashboard/user/UpdateAddress';
