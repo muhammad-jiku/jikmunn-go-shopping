@@ -3,6 +3,7 @@ import ErrorHandler from '../utils/ErrorHandler';
 import bcrypt from 'bcryptjs';
 import fs from 'fs';
 import { uploads } from '../utils/cloudinaryFile';
+import APIFilters from '../utils/ApiFilters';
 
 export const registerUser = async (req, res) => {
   try {
@@ -83,6 +84,33 @@ export const updatePassword = async (req, res, next) => {
       success: true,
       data: user,
       message: 'Password updated successfully',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong',
+    });
+  }
+};
+
+export const getUsers = async (req, res) => {
+  try {
+    const resPerPage = 2;
+    const usersCount = await User.countDocuments();
+
+    const apiFilters = new APIFilters(User.find({}), req.query).pagination(
+      resPerPage
+    );
+
+    const users = await apiFilters.query;
+
+    return res.status(200).json({
+      success: true,
+      usersCount,
+      resPerPage,
+      data: users,
+      message: 'Users displayed to admin successfully',
     });
   } catch (error) {
     console.log(error);
