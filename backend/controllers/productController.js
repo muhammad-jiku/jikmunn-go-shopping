@@ -2,6 +2,7 @@ import Product from '../models/Product';
 import APIFilters from '../utils/ApiFilters';
 import fs from 'fs';
 import { uploads } from '../utils/cloudinaryFile';
+import ErrorHandler from '../utils/ErrorHandler';
 
 export const newProduct = async (req, res) => {
   try {
@@ -56,14 +57,12 @@ export const getProducts = async (req, res) => {
   }
 };
 
-export const getProduct = async (req, res) => {
+export const getProduct = async (req, res, next) => {
   try {
     const product = await Product.findById({ _id: req.query.id });
 
     if (!product) {
-      res.status(404).json({
-        error: 'Something went missing!',
-      });
+      return next(new ErrorHandler('Product not found.', 404));
     }
 
     return res.status(200).json({
@@ -85,9 +84,7 @@ export const uploadProductImages = async (req, res, next) => {
     let product = await Product.findById({ _id: req.query.id });
 
     if (!product) {
-      res.status(404).json({
-        error: 'Product not found.',
-      });
+      return next(new ErrorHandler('Product not found.', 404));
     }
 
     const uploader = async (path) =>
@@ -112,6 +109,30 @@ export const uploadProductImages = async (req, res, next) => {
       data: urls,
       product,
       message: 'Product image uploaded successfully!',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong',
+    });
+  }
+};
+
+export const updateProduct = async (req, res, next) => {
+  try {
+    let product = await Product.findById({ _id: req.query.id });
+
+    if (!product) {
+      return next(new ErrorHandler('Product not found.', 404));
+    }
+
+    product = await Product.findByIdAndUpdate(req.query.id, req.body);
+
+    return res.status(200).json({
+      success: true,
+      data: product,
+      message: 'product updated successfully!',
     });
   } catch (error) {
     console.log(error);
