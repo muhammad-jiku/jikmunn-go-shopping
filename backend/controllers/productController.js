@@ -1,7 +1,7 @@
 import Product from '../models/Product';
 import APIFilters from '../utils/ApiFilters';
 import fs from 'fs';
-import { uploads } from '../utils/cloudinaryFile';
+import { cloudinary, uploads } from '../utils/cloudinaryFile';
 import ErrorHandler from '../utils/ErrorHandler';
 
 export const newProduct = async (req, res) => {
@@ -133,6 +133,37 @@ export const updateProduct = async (req, res, next) => {
       success: true,
       data: product,
       message: 'product updated successfully!',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong',
+    });
+  }
+};
+
+export const deleteProduct = async (req, res, next) => {
+  try {
+    let product = await Product.findById({ _id: req.query.id });
+
+    if (!product) {
+      return next(new ErrorHandler('Product not found.', 404));
+    }
+
+    // Deleting images associated with the product
+    for (let i = 0; i < product.images.length; i++) {
+      const res = await cloudinary.v2.uploader.destroy(
+        product.images[i].public_id
+      );
+    }
+
+    await product.deleteOne();
+
+    return res.status(200).json({
+      success: true,
+      data: product,
+      message: 'product deleted successfully!',
     });
   } catch (error) {
     console.log(error);
