@@ -166,3 +166,27 @@ export const updateUser = async (req, res, next) => {
     });
   }
 };
+
+export const deleteUser = async (req, res, next) => {
+  try {
+    let user = await User.findById({ _id: req.query.id });
+
+    if (!user) {
+      return next(new ErrorHandler('No User found with this ID', 404));
+    }
+
+    await user.deleteOne();
+
+    return res.status(200).json({
+      success: true,
+      data: user,
+      message: 'User deleted by admin successfully',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong',
+    });
+  }
+};
