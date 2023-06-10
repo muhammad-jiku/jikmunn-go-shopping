@@ -1,4 +1,8 @@
-import { getOrder } from '@/backend/controllers/orderController';
+import {
+  getOrder,
+  updateOrder,
+  deleteOrder,
+} from '@/backend/controllers/orderController';
 import {
   authorizeRoles,
   isAuthenticatedUser,
@@ -14,6 +18,18 @@ import nc from 'next-connect';
 //       authorizeRoles('admin');
 //       getOrder(req, res);
 //     });
+//   } else if (req.method === 'PUT') {
+//     await connectToDB();
+//     await isAuthenticatedUser(req, res, () => {
+//       authorizeRoles('admin');
+//       updateOrder(req, res);
+//     });
+//   } else if (req.method === 'GET') {
+//     await connectToDB();
+//     await isAuthenticatedUser(req, res, () => {
+//       authorizeRoles('admin');
+//       deleteOrder(req, res);
+//     });
 //   } else {
 //     return res.status(405).json({
 //       message: 'Method not allowed! Please try again',
@@ -28,5 +44,7 @@ const handler = nc({
 connectToDB();
 
 handler.use(isAuthenticatedUser, authorizeRoles('admin')).get(getOrder);
+handler.use(isAuthenticatedUser, authorizeRoles('admin')).put(updateOrder);
+handler.use(isAuthenticatedUser, authorizeRoles('admin')).delete(deleteOrder);
 
 export default handler;
