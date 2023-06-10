@@ -3,6 +3,8 @@ import APIFilters from '../utils/ApiFilters';
 
 export const newProduct = async (req, res) => {
   try {
+    req.body.user = req.user._id;
+
     const product = await Product.create(req.body);
 
     return res.status(201).json({
