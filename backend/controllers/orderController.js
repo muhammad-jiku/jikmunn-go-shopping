@@ -33,6 +33,33 @@ export const myOrders = async (req, res) => {
   }
 };
 
+export const getOrders = async (req, res) => {
+  try {
+    const resPerPage = 2;
+    const ordersCount = await Order.countDocuments();
+
+    const apiFilters = new APIFilters(Order.find({}), req.query).pagination(
+      resPerPage
+    );
+
+    const orders = await apiFilters.query.find().populate('shippingInfo user');
+
+    return res.status(200).json({
+      success: true,
+      ordersCount,
+      resPerPage,
+      data: orders,
+      message: 'User orders displayed to admin successfully!',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong',
+    });
+  }
+};
+
 export const checkoutSession = async (req, res) => {
   try {
     const body = req.body;
