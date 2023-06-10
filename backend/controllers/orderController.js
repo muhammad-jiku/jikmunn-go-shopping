@@ -3,6 +3,7 @@ import Order from '../models/Order';
 const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
 import getRawBody from 'raw-body';
 import APIFilters from '../utils/ApiFilters';
+import ErrorHandler from '../utils/ErrorHandler';
 
 export const myOrders = async (req, res) => {
   try {
@@ -50,6 +51,30 @@ export const getOrders = async (req, res) => {
       resPerPage,
       data: orders,
       message: 'User orders displayed to admin successfully!',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong',
+    });
+  }
+};
+
+export const getOrder = async (req, res, next) => {
+  try {
+    const order = await Order.findById({ _id: req.query.id }).populate(
+      'shippingInfo user'
+    );
+
+    if (!order) {
+      return next(new ErrorHandler('No Order found with this ID', 404));
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: order,
+      message: 'User order displayed to admin successfully!',
     });
   } catch (error) {
     console.log(error);
