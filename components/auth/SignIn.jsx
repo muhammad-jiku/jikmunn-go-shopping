@@ -40,7 +40,7 @@ const SignIn = () => {
       className='mt-10 mb-20 p-4 md:p-7 mx-auto rounded bg-white shadow-lg'
     >
       <form onSubmit={submitHandler}>
-        <h2 className='mb-5 text-2xl font-semibold'>Sign In</h2>
+        <h2 className='mb-5 text-2xl font-semibold'>Sign in to your account</h2>
 
         <div className='mb-4'>
           <label className='block mb-1'> Email </label>
