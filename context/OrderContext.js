@@ -9,6 +9,7 @@ const OrderContext = createContext();
 export const OrderProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [updated, setUpdated] = useState(false);
+  const [canReview, setCanReview] = useState(false);
 
   const router = useRouter();
 
@@ -46,6 +47,21 @@ export const OrderProvider = ({ children }) => {
     }
   };
 
+  const canUserReview = async (id) => {
+    try {
+      const { data } = await axios.get(
+        // `${process.env.API_URL}/api/v1/orders/can_review?productId=${id}`
+        `/api/v1/orders/can_review?productId=${id}`
+      );
+
+      if (data?.canReview) {
+        setCanReview(data?.canReview);
+      }
+    } catch (error) {
+      setError(error?.response?.data?.message);
+    }
+  };
+
   const clearErrors = () => {
     setError(null);
   };
@@ -55,9 +71,11 @@ export const OrderProvider = ({ children }) => {
       value={{
         error,
         updated,
+        canReview,
         setUpdated,
         updateOrder,
         deleteOrder,
+        canUserReview,
         clearErrors,
       }}
     >
