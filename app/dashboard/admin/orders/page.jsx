@@ -25,7 +25,7 @@ const getOrders = async (searchParams) => {
     }
   );
 
-  return data;
+  return data?.data;
 };
 
 const Page = async ({ searchParams }) => {
