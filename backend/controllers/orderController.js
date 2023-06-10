@@ -85,6 +85,32 @@ export const getOrder = async (req, res, next) => {
   }
 };
 
+export const updateOrder = async (req, res, next) => {
+  try {
+    let order = await Order.findById({ _id: req.query.id });
+
+    if (!order) {
+      return next(new ErrorHandler('No Order found with this ID', 404));
+    }
+
+    order = await Order.findByIdAndUpdate(req.query.id, {
+      orderStatus: req.body.orderStatus,
+    });
+
+    return res.status(200).json({
+      success: true,
+      data: order,
+      message: 'User order updated by admin successfully!',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong',
+    });
+  }
+};
+
 export const checkoutSession = async (req, res) => {
   try {
     const body = req.body;
