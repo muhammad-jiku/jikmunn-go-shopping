@@ -149,7 +149,7 @@ export const productReviewPermission = async (req, res) => {
     return res.status(200).json({
       success: true,
       canReview,
-      message: 'User reviews added successfully!',
+      message: 'User reviews displayed successfully!',
     });
   } catch (error) {
     console.log(error);
