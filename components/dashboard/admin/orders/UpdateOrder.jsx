@@ -4,6 +4,7 @@ import OrderContext from '@/context/OrderContext';
 import Image from 'next/image';
 import React, { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
+import { BiSolidDownArrow } from 'react-icons/bi';
 
 const UpdateOrder = ({ order }) => {
   const { updateOrder, error, clearErrors, updated, setUpdated } =
@@ -123,16 +124,7 @@ const UpdateOrder = ({ order }) => {
               </option>
             ))}
           </select>
-          <i class='absolute inset-y-0 right-0 p-2 text-gray-400'>
-            <svg
-              width='22'
-              height='22'
-              class='fill-current'
-              viewBox='0 0 20 20'
-            >
-              <path d='M7 10l5 5 5-5H7z'></path>
-            </svg>
-          </i>
+          <BiSolidDownArrow />
         </div>
       </div>
 

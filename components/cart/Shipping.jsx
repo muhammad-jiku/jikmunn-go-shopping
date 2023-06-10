@@ -4,6 +4,7 @@ import CartContext from '@/context/CartContext';
 import Link from 'next/link';
 import React, { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
+import { BiPlus } from 'react-icons/bi';
 import BreadCrumbs from '../shared/BreadCrumbs';
 
 const Shipping = ({ addresses }) => {
@@ -71,7 +72,7 @@ const Shipping = ({ addresses }) => {
                   href='/address/new'
                   className='px-4 py-2 inline-block text-blue-600 border border-gray-300 rounded-md hover:bg-gray-100'
                 >
-                  <i className='mr-1 fa fa-plus'></i> Add new address
+                  <BiPlus /> Add new address
                 </Link>
 
                 <div className='flex justify-end space-x-2 mt-10'>

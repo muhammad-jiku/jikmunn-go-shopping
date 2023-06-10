@@ -3,6 +3,7 @@
 import ProductContext from '@/context/ProductContext';
 import React, { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { BiSolidDownArrow } from 'react-icons/bi';
 
 const UpdateProduct = ({ data }) => {
   const { updateProduct, error, updated, setUpdated, clearErrors } =
@@ -116,16 +117,7 @@ const UpdateProduct = ({ data }) => {
                   </option>
                 ))}
               </select>
-              <i className='absolute inset-y-0 right-0 p-2 text-gray-400'>
-                <svg
-                  width='22'
-                  height='22'
-                  className='fill-current'
-                  viewBox='0 0 20 20'
-                >
-                  <path d='M7 10l5 5 5-5H7z'></path>
-                </svg>
-              </i>
+              <BiSolidDownArrow />
             </div>
           </div>
         </div>
