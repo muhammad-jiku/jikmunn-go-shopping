@@ -135,6 +135,31 @@ export const deleteOrder = async (req, res, next) => {
   }
 };
 
+export const productReviewPermission = async (req, res) => {
+  try {
+    const productId = req.query.productId;
+
+    const orders = await Order.find({
+      user: req?.user?._id,
+      'orderItems.product': productId,
+    });
+
+    let canReview = orders?.length >= 1 ? true : false;
+
+    return res.status(200).json({
+      success: true,
+      canReview,
+      message: 'User reviews added successfully!',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong',
+    });
+  }
+};
+
 export const checkoutSession = async (req, res) => {
   try {
     const body = req.body;
