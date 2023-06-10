@@ -14,3 +14,4 @@ export { default as UpdateAddress } from './dashboard/user/address/UpdateAddress
 export { default as OrderLists } from './dashboard/user/orders/OrderLists';
 export { default as NewProduct } from './dashboard/admin/NewProduct';
 export { default as AllProducts } from './dashboard/admin/AllProducts';
+export { default as UploadImages } from './dashboard/admin/UploadImages';

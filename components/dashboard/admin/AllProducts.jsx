@@ -36,7 +36,7 @@ const AllProducts = ({ data }) => {
               <td className='px-6 py-2'>
                 <div>
                   <Link
-                    href={`/admin/products/upload_images`}
+                    href={`/dashboard/admin/products/${product?._id}/upload_images`}
                     className='px-2 py-2 inline-block text-green-600 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 cursor-pointer mr-2'
                   >
                     <i className='fa fa-image' aria-hidden='true'></i>
