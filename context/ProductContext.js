@@ -22,7 +22,31 @@ export const ProductProvider = ({ children }) => {
       );
 
       if (data) {
-        router.replace('/admin/products');
+        router.replace('/dashboard/admin/products');
+      }
+    } catch (error) {
+      setError(error?.response?.data?.message);
+    }
+  };
+
+  const uploadProductImages = async (formData, id) => {
+    try {
+      setLoading(true);
+
+      const { data } = await axios.post(
+        // `${process.env.API_URL}/api/v1/admin/product/upload_images/${id}`,
+        `/api/v1/admin/product/upload_images/${id}`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+
+      if (data?.data) {
+        setLoading(false);
+        router.replace('/dashboard/admin/products');
       }
     } catch (error) {
       setError(error?.response?.data?.message);
@@ -41,7 +65,7 @@ export const ProductProvider = ({ children }) => {
         updated,
         setUpdated,
         newProduct,
-
+        uploadProductImages,
         clearErrors,
       }}
     >
