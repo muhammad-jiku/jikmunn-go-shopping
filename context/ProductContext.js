@@ -53,6 +53,40 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
+  const updateProduct = async (product, id) => {
+    try {
+      const { data } = await axios.put(
+        // `${process.env.API_URL}/api/v1/admin/product/${id}`,
+        `/api/v1/admin/product/${id}`,
+        product
+      );
+
+      console.log('updated product data ', data);
+
+      if (data) {
+        setUpdated(true);
+        router.replace(`/dashboard/admin/products/${id}`);
+      }
+    } catch (error) {
+      setError(error?.response?.data?.message);
+    }
+  };
+
+  const deleteProduct = async (id) => {
+    try {
+      const { data } = await axios.delete(
+        // `${process.env.API_URL}/api/v1/admin/product/${id}`,
+        `/api/v1/admin/product/${id}`
+      );
+
+      if (data?.success) {
+        router.replace(`/dashboard/admin/products/${id}`);
+      }
+    } catch (error) {
+      setError(error?.response?.data?.message);
+    }
+  };
+
   const clearErrors = () => {
     setError(null);
   };
@@ -66,6 +100,8 @@ export const ProductProvider = ({ children }) => {
         setUpdated,
         newProduct,
         uploadProductImages,
+        updateProduct,
+        deleteProduct,
         clearErrors,
       }}
     >
