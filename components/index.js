@@ -16,3 +16,4 @@ export { default as NewProduct } from './dashboard/admin/products/NewProduct';
 export { default as UpdateProduct } from './dashboard/admin/products/UpdateProduct';
 export { default as AllProducts } from './dashboard/admin/products/AllProducts';
 export { default as UploadImages } from './dashboard/admin/products/UploadImages';
+export { default as AllOrders } from './dashboard/admin/orders/AllOrders';
