@@ -19,3 +19,4 @@ export { default as UploadImages } from './dashboard/admin/products/UploadImages
 export { default as AllOrders } from './dashboard/admin/orders/AllOrders';
 export { default as UpdateOrder } from './dashboard/admin/orders/UpdateOrder';
 export { default as AllUsers } from './dashboard/admin/users/AllUsers';
+export { default as UpdateUser } from './dashboard/admin/users/UpdateUser';
